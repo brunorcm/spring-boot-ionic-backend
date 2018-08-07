@@ -30,6 +30,7 @@ public class Cliente implements Serializable {
 	
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
 	private Set<String> telefones = new HashSet<String>();
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	public Cliente() {
 		super();
@@ -95,6 +96,16 @@ public class Cliente implements Serializable {
 	public void setTelefones(Set<String> telefones) {
 		this.telefones = telefones;
 	}
+
+	@OneToMany(mappedBy="cliente")
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
