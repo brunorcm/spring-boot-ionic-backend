@@ -14,7 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -22,14 +22,24 @@ public class Cliente implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
 	private String email;
 	private String cpfOuCnpj;
 	private Integer tipo;
 	
+	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<Endereco>();
+	
+	
+	@ElementCollection
+	@CollectionTable(name = "telefone")
 	private Set<String> telefones = new HashSet<String>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="cliente")	
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
 	public Cliente() {
@@ -45,8 +55,6 @@ public class Cliente implements Serializable {
 		this.tipo = tipo.getCodigo();
 	}
 
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	public Integer getId() {
 		return id;
 	}
@@ -79,17 +87,13 @@ public class Cliente implements Serializable {
 		this.tipo = tipo.getCodigo();
 	}
 	
-	@OneToMany(mappedBy = "cliente")
-	@JsonManagedReference
 	public List<Endereco> getEnderecos() {
 		return enderecos;
 	}
 	public void setEnderecos(List<Endereco> enderecos) {
 		this.enderecos = enderecos;
 	}
-	
-	@ElementCollection
-	@CollectionTable(name = "telefone")
+
 	public Set<String> getTelefones() {
 		return telefones;
 	}
@@ -97,7 +101,6 @@ public class Cliente implements Serializable {
 		this.telefones = telefones;
 	}
 
-	@OneToMany(mappedBy="cliente")
 	public List<Pedido> getPedidos() {
 		return pedidos;
 	}

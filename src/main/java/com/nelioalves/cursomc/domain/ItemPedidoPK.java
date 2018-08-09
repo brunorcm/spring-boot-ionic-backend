@@ -12,11 +12,11 @@ public class ItemPedidoPK implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_pedido")
+	@JoinColumn(name = "pedido_id")
 	private Pedido pedido;
 	
 	@ManyToOne
-	@JoinColumn(name = "id_produto")
+	@JoinColumn(name = "produto_id")
 	private Produto produto;
 	
 	public Pedido getPedido() {
