@@ -10,6 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
+import com.nelioalves.cursomc.dto.CategoriaDTO;
+
 @Entity
 public class Categoria implements Serializable {
 	
@@ -55,6 +57,10 @@ public class Categoria implements Serializable {
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+	
+	public Categoria fromDTO (CategoriaDTO dto) {
+		return new Categoria(dto.getId(), dto.getNome());
 	}
 
 	@Override
