@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.nelioalves.cursomc.domain.enums.TipoCliente;
 import com.nelioalves.cursomc.dto.ClienteDTO;
+import com.nelioalves.cursomc.dto.ClienteNewDTO;
 
 @Entity
 public class Cliente implements Serializable {
@@ -113,6 +114,22 @@ public class Cliente implements Serializable {
 	
 	public Cliente fromDTO (ClienteDTO dto) {
 		return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), null, null);
+	}
+	
+	public Cliente fromDTO(ClienteNewDTO dto) {
+		Cliente cli = new Cliente(null, dto.getNome(), dto.getEmail(), dto.getCpfOuCnpj(), TipoCliente.toEnum(dto.getTipo()));
+		Cidade cidade = new Cidade(dto.getCidadeId(), null, null);
+		Endereco endereco = new Endereco(null, dto.getLogradouro(), dto.getNumero(), dto.getComplemento(), dto.getBairro(), dto.getCep(), cli, cidade);
+		
+		cli.getEnderecos().add(endereco);
+		cli.getTelefones().add(dto.getTelefone1());
+		if (dto.getTelefone2() != null) {
+			cli.getTelefones().add(dto.getTelefone2());
+		}
+		if (dto.getTelefone3() != null) {
+			cli.getTelefones().add(dto.getTelefone3());
+		}
+		return cli;
 	}
 
 	@Override
