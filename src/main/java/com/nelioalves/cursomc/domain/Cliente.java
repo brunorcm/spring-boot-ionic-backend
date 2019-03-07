@@ -57,8 +57,6 @@ public class Cliente implements Serializable {
 	@OneToMany(mappedBy="cliente")	
 	private List<Pedido> pedidos = new ArrayList<Pedido>();
 	
-	private String imageUrl;
-	
 	public Cliente() {
 		super();
 		addPerfil(Perfil.CLIENTE);
@@ -146,14 +144,6 @@ public class Cliente implements Serializable {
 	
 	public Cliente fromDTO (ClienteDTO dto) {
 		return new Cliente(dto.getId(), dto.getNome(), dto.getEmail(), null, null, null);
-	}
-
-	public String getImageUrl() {
-		return imageUrl;
-	}
-
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
 	}
 
 	@Override
